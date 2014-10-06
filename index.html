@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8"> 
+  <head>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>Meny prototype</title>
+    <style>
+      * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      body {
+        margin: 20px;
+        font-size: 16px;
+        font-family: courier;
+      }
+      nav {
+        width: 250px;
+        margin: 0;
+      }
+      .nav-box {
+        margin: 0 0 3px;
+        padding: 20px 0;
+        background: #eee;
+        font-size: 0.8em;
+      }
+      .nav-category {
+        position: relative;
+        margin: 0;
+        padding: 20px 20px 10px;
+        font-size: 0.8em;
+        font-weight: normal;
+        text-transform: uppercase;
+      }
+      .nav-box-title {
+        position: relative;
+        margin: 0 0 5px;
+        padding: 0 20px;
+        text-transform: uppercase;
+      }
+      .nav-box-list {
+        max-height: 800px;
+        margin: 0;
+        padding: 0;
+        -webkit-transition: all 500ms;
+        overflow: hidden;
+      }
+      .nav-box--closed .nav-box-list {
+        max-height: 0;
+      }
+      .nav-box-item {
+        position: relative;
+        list-style: none;
+        padding: 0;
+      }
+      .nav-box-item-link {
+        display: block;
+        padding: 5px 20px;
+        color: #333;
+        text-transform: uppercase;
+        text-decoration: none;
+        -webkit-transition: all 300ms;
+        -moz-transition: all 300ms;
+        transition: all 300ms;
+      }
+      .nav-box-item-link:hover {
+        background: #fff;
+      }
+      .nav-box-twist {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        width: 2em;
+        height: 2em;
+        margin-top: -1em;
+        padding: 0.5em;
+        line-height: 1em;
+        border-radius: 100%;
+        text-align: center;
+        cursor: pointer;
+        -webkit-transition: all 300ms;
+        -moz-transition: all 300ms;
+        transition: all 300ms;
+      }
+      .nav-box--closed .nav-box-twist {
+        background: #ccc;
+      }
+      .nav-box-twist:before,
+      .nav-box-twist:after {
+        content: '-';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1em;
+        height: 1em;
+        padding: 0.5em;
+        line-height: 1em;
+        -webkit-transition: all 300ms;
+        -moz-transition: all 300ms;
+        transition: all 300ms;
+
+      }
+      .nav-box-twist:after {
+        content: '+';
+        opacity: 0;
+        -webkit-transform: rotate(-180deg);
+        -moz-transform: rotate(-180deg);
+        transform: rotate(-180deg);
+       }
+      .nav-box-twist:hover {
+        background: #fff;
+      }
+      .nav-box--closed .nav-box-twist:before {
+        opacity: 0;
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+      .nav-box--closed .nav-box-twist:after {
+        opacity: 1;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav>
+
+      <div class="nav-box" id="nav-box-kategorier">
+        <h3 class="nav-box-title">Kategorier<span class="nav-box-twist"></span></h3>
+        <ul class="nav-box-list">
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Lyftutrustning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Transport</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Miljöhantering</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Säkerhet</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Lagerinredning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Industri och verkstad</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Utomhusmiljö</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Entré och reception</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Kontorsinredning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Konferens och lunchrum</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Märkning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Butiksinredning</a></li>
+        </ul>
+      </div>
+
+      <h2 class="nav-category">Filtrera</h2>
+      
+      <div class="nav-box">
+        <h3 class="nav-box-title">Inriktning<span class="nav-box-twist"></span></h3>
+        <ul class="nav-box-list">
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Lager</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Kontor</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Personalutrymme</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Butik</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Säkerhet</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Fler inriktningar</a></li>
+        </ul>
+      </div>
+      
+      <div class="nav-box">
+        <h3 class="nav-box-title">Paketering<span class="nav-box-twist"></span></h3>
+        <ul class="nav-box-list">
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Premium</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Basic</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Ergonomi</a></li>
+        </ul>
+      </div>
+      
+      <div class="nav-box">
+        <h3 class="nav-box-title">Varumärken<span class="nav-box-twist"></span></h3>
+        <ul class="nav-box-list">
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Varumärke 1</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Varumärke 2</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Varumärke x</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Fler varumärken</a></li>
+        </ul>
+      </div>
+      
+      <div class="nav-box">
+        <h3 class="nav-box-title">Aktuellt<span class="nav-box-twist"></span></h3>
+        <ul class="nav-box-list">
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Kampanjer</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Nyheter</a></li>
+        </ul>
+      </div>
+
+    </nav>
+
+  <script src="javascript/vendor/lodash.compat.min.js"></script>
+  <!--<script src="javascript/vendor/classlist.js"></script>-->
+  <!--<script src="javascript/vendor/foreach.js"></script>-->
+  <script>
+
+    var proto = function(_){
+    
+      var init = function(){
+        var test = document.querySelectorAll("#nav-box-kategorier");
+        collapseEvent();
+      };
+
+      var nodes2Array = function (nl) {
+        var arr = [];
+        for(var i=-1,l=nl.length;++i!==l;arr[i]=nl[i]);
+        return arr;
+      }
+
+      var collapseToggle = function (collapsingBox) {
+        var className = "nav-box--closed";
+        if (collapsingBox.classList) {
+          collapsingBox.classList.toggle(className);
+        }
+      };
+
+      var collapseEvent = function() {
+        var collapseTwists = nodes2Array(document.querySelectorAll(".nav-box-twist"));
+        collapseTwists.forEach(function (el,i) {
+          el.addEventListener('click', function(){
+            var collapseBox = el.parentNode.parentNode;
+            collapseToggle(collapseBox);
+          });
+        })
+      };
+    
+      return {
+        init: init
+      };
+    }();
+    proto.init();
+  </script>
+
+  </body>
+</html>
