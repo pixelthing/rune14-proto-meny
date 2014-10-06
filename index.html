@@ -21,26 +21,32 @@
       }
       .nav-box {
         margin: 0 0 3px;
-        padding: 20px 0;
+        padding: 10px 0;
         background: #eee;
         font-size: 0.8em;
+      }
+      .nav-subbox {
+        padding: 10px 0 0;
+        border-width: 3px 0 0;
+        border-style: solid;
+        border-color: #fff;
       }
       .nav-category {
         position: relative;
         margin: 0;
-        padding: 20px 20px 10px;
+        padding: 20px 15px 10px;
         font-size: 0.8em;
         font-weight: normal;
         text-transform: uppercase;
       }
       .nav-box-title {
         position: relative;
-        margin: 0 0 5px;
-        padding: 0 20px;
+        margin: 0;
+        padding: 0 15px;
         text-transform: uppercase;
       }
       .nav-box-list {
-        max-height: 800px;
+        max-height: 600px;
         margin: 0;
         padding: 0;
         -webkit-transition: all 500ms;
@@ -52,24 +58,50 @@
       .nav-box-item {
         position: relative;
         list-style: none;
+        max-height: 3em;
         padding: 0;
+        overflow: hidden;
+        -webkit-transition: max-height 300ms;
+        -moz-transition: max-height 300ms;
+        transition: max-height 300ms;
+      }
+      .nav-box-list__sub>.nav-box-item {
+        max-height: 0;
       }
       .nav-box-item-link {
+        position: relative;
         display: block;
-        padding: 5px 20px;
+        padding: 5px 15px;
         color: #333;
+        border: 0 solid #eee;
         text-transform: uppercase;
         text-decoration: none;
-        -webkit-transition: all 300ms;
-        -moz-transition: all 300ms;
-        transition: all 300ms;
+        -webkit-transition: color 300ms, background-color 300ms, border-width 300ms, margin 300ms;
+        -moz-transition: color 300ms, background-color 300ms, border-width 300ms, margin 300ms;
+        transition: color 300ms, background-color 300ms, border-width 300ms, margin 300ms;
       }
       .nav-box-item-link:hover {
         background: #fff;
       }
-      .nav-box-twist {
+      .nav-box-list__sub>.nav-box-item__sub {
+        max-height: 3em;
+      }
+      .nav-box-item__sub>.nav-box-item-link {
+        margin: 10px 0 0;
+        padding: 5px 10px;
+        color: #fff;
+        background: #999;
+        border-style: solid;
+        border-color: #eee;
+        border-width: 0 10px 10px 15px;
+        -webkit-transition: border-width 300ms, margin 300ms;
+        -moz-transition: border-width 300ms, margin 300ms;
+        transition: border-width 300ms, margin 300ms;
+      }
+      .nav-box-twist,
+      .nav-box-item__sub>.nav-box-item-link:after {
         position: absolute;
-        right: 20px;
+        right: 10px;
         top: 50%;
         width: 2em;
         height: 2em;
@@ -82,9 +114,6 @@
         -webkit-transition: all 300ms;
         -moz-transition: all 300ms;
         transition: all 300ms;
-      }
-      .nav-box--closed .nav-box-twist {
-        background: #ccc;
       }
       .nav-box-twist:before,
       .nav-box-twist:after {
@@ -107,9 +136,13 @@
         -webkit-transform: rotate(-180deg);
         -moz-transform: rotate(-180deg);
         transform: rotate(-180deg);
-       }
+      }
       .nav-box-twist:hover {
         background: #fff;
+      }
+      .nav-box-item__sub>.nav-box-item-link:after {
+        content: '✕';
+        right: -5px;
       }
       .nav-box--closed .nav-box-twist:before {
         opacity: 0;
@@ -130,82 +163,301 @@
     <nav>
 
       <div class="nav-box">
-        <h3 class="nav-box-title">Kategorier<span class="nav-box-twist"></span></h3>
+        <h3 class="nav-box-title">Kategorier<span class="nav-box-twist js-nav-box-twist"></span></h3>
         <ul class="nav-box-list">
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Lyftutrustning</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Transport</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Miljöhantering</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Säkerhet</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Lagerinredning</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Industri och verkstad</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Utomhusmiljö</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Entré och reception</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Kontorsinredning</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Konferens och lunchrum</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Märkning</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Butiksinredning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="lyftutrustning">Lyftutrustning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="transport">Transport</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="miljöhantering">Miljöhantering</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="säkerhet">Säkerhet</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="lagerinredning">Lagerinredning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="industri-och-verkstad">Industri och verkstad</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="utomhusmiljö">Utomhusmiljö</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="entré-och-reception">Entré och reception</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="kontorsinredning">Kontorsinredning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="konferens-och-lunchrum">Konferens och lunchrum</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="märkning">Märkning</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="butiksinredning">Butiksinredning</a></li>
         </ul>
       </div>
 
       <h2 class="nav-category">Filtrera</h2>
       
-      <div class="nav-box">
-        <h3 class="nav-box-title">Inriktning<span class="nav-box-twist"></span></h3>
+      <div class="nav-box nav-box--closed">
+        <h3 class="nav-box-title">Inriktning<span class="nav-box-twist js-nav-box-twist"></span></h3>
         <ul class="nav-box-list">
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Lager</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Kontor</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Personalutrymme</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Butik</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Säkerhet</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Fler inriktningar</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Lager</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Kontor</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Personalutrymme</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Butik</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Säkerhet</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Fler inriktningar</a></li>
         </ul>
       </div>
       
-      <div class="nav-box">
-        <h3 class="nav-box-title">Paketering<span class="nav-box-twist"></span></h3>
+      <div class="nav-box nav-box--closed">
+        <h3 class="nav-box-title">Paketering<span class="nav-box-twist js-nav-box-twist"></span></h3>
         <ul class="nav-box-list">
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Premium</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Basic</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Ergonomi</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Premium</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Basic</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Ergonomi</a></li>
         </ul>
       </div>
       
-      <div class="nav-box">
-        <h3 class="nav-box-title">Varumärken<span class="nav-box-twist"></span></h3>
+      <div class="nav-box nav-box--closed">
+        <h3 class="nav-box-title">Varumärken<span class="nav-box-twist js-nav-box-twist"></span></h3>
         <ul class="nav-box-list">
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Varumärke 1</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Varumärke 2</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Varumärke x</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Fler varumärken</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Varumärke 1</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Varumärke 2</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Varumärke x</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Fler varumärken</a></li>
         </ul>
       </div>
       
-      <div class="nav-box">
-        <h3 class="nav-box-title">Aktuellt<span class="nav-box-twist"></span></h3>
+      <div class="nav-box nav-box--closed">
+        <h3 class="nav-box-title">Aktuellt<span class="nav-box-twist js-nav-box-twist"></span></h3>
         <ul class="nav-box-list">
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Kampanjer</a></li>
-          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link">Nyheter</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Kampanjer</a></li>
+          <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Nyheter</a></li>
         </ul>
       </div>
 
     </nav>
 
+  <script type="app/template" id='js-template-nav-subbox'>
+            <div class="nav-box js-nav-box-sub-<%= kategoriType %>">
+              <h3 class="nav-box-title"><%= kategoriNamn %><span class="nav-box-twist js-nav-box-twist"></span></h3>
+              <ul class="nav-box-list">
+                <%
+                  // repeat items 
+                  _.each(kategoriMeny,function(item,key,list){
+                %>
+                <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="<%= kategoriType %>-<%= key %>"  ><%= item %></a></li>
+                <%
+                  });
+                %>
+              </ul>
+            </div>
+  </script>
   <script src="javascript/vendor/lodash.compat.min.js"></script>
   <!--<script src="javascript/vendor/classlist.js"></script>-->
   <!--<script src="javascript/vendor/foreach.js"></script>-->
   <script>
 
     var proto = function(_){
+
+      var menyData = {
+        'lyftutrustning' : {
+          'namn' : 'Lyftutrustning',
+          'meny' : {
+            'lyftredskap' : 'Lyftredskap',
+            'lyfthjälpmedel' : 'Lyfthjälpmedel'
+          }
+        },
+        'transport' : {
+          'namn' : 'Transport',
+          'meny' : {
+            'vagnar-och-kärror' : 'Vagnar och kärror',
+            'pallar-och-containers' : 'Pallar och containers',
+            'rullbanor-och-industrihjul' : 'Rullbanor och industrihjul',
+            'cyklar' : 'Cyklar',
+            'ramper-och-trösklar' : 'Ramper och trösklar'
+          }
+        },
+        'transport-vagnar-och-kärror' : {
+          'namn' : 'Vagnar och kärror',
+          'meny' : {
+            'Rullbord' : 'Rullbord',
+            'Hyllvagnar' : 'Hyllvagnar',
+            'Transportvagnar' : 'Transportvagnar',
+            'Pallvagnar' : 'Pallvagnar',
+            'Långgodsvagnar' : 'Långgodsvagnar',
+            'Handtruck' : 'Handtruck',
+            'Lyftvagnar' : 'Lyftvagnar',
+            'Gallervagnar' : 'Gallervagnar',
+            'Magasinkärror' : 'Magasinkärror',
+            'Skivställ-och-skivvagnar' : 'Skivställ och skivvagnar',
+            'Fatvagnar' : 'Fatvagnar',
+            'Däckvagnar' : 'Däckvagnar',
+            'Tillbehör-vagnar' : 'Tillbehör vagnar',
+            'Plockvagnar' : 'Plockvagnar',
+            'Skottkärror' : 'Skottkärror'
+          }
+        },
+        'transport-pallar-och-containers' : {
+          'namn' : 'Vagnar och kärror',
+          'meny' : {
+            'Pallar' : 'Pallar',
+            'Pallkragar' : 'Pallkragar',
+            'Pallben' : 'Pallben',
+            'Pallvagnar' : 'Pallvagnar',
+            'Pallvågar' : 'Pallvågar',
+            'Palltillbehör' : 'Palltillbehör',
+            'Pallramar' : 'Pallramar',
+            'Miljöskyddspallar' : 'Miljöskyddspallar',
+            'Tippcontainers' : 'Tippcontainers',
+            'Bigbox' : 'Bigbox',
+            'Rullcontainers' : 'Rullcontainers',
+            'Säkerhetscontainers' : 'Säkerhetscontainers',
+            'Berglöfslådan' : 'Berglöfslådan',
+            'BM-behållare' : 'BM behållare',
+            'Dumperbehållare' : 'Dumperbehållare'
+          }
+        },
+        'transport-rullbanor-och-industrihjul' : {
+          'namn' : 'Rullbanor och industrihjul',
+          'meny' : {
+            'Rullbanor' : 'Rullbanor',
+            'Tillbehör rullbanor' : 'Tillbehör rullbanor',
+            'Kulrullar' : 'Kulrullar',
+            'Industrihjul' : 'Industrihjul',
+            'Gaffelvagnshjul' : 'Gaffelvagnshjul'
+          }
+        },
+        'transport-cyklar' : {
+          'namn' : 'Cyklar',
+          'meny' : {
+            'Sparkcyklar' : 'Sparkcyklar',
+            'Paketcyklar' : 'Paketcyklar',
+            'Cykelkärror' : 'Cykelkärror',
+            'Elcyklar' : 'Elcyklar'
+          }
+        },
+        'transport-ramper-och-trösklar' : {
+          'namn' : 'Ramper och trösklar',
+          'meny' : {
+            'ramper' : 'Ramper',
+            'tröskelbryggor' : 'Tröskelbryggor'
+          }
+        },
+        'miljöhantering' : {
+          'namn' : 'Miljöhantering',
+          'meny' : {
+            'containers' : 'Containers',
+            'avfallshantering' : 'Avfallshantering',
+            'fathantering' : 'Fathantering',
+            'kemikalieförvaring' : 'Kemikalieförvaring',
+            'städutrustning' : 'Städutrustning',
+            'avfuktare' : 'Avfuktare'
+          }
+        },
+        'säkerhet' : {
+          'namn' : 'Säkerhet',
+          'meny' : {
+            'avspärrning' : 'Avspärrning',
+            'påkörningsskydd' : 'Påkörningsskydd',
+            'varselmärkning' : 'Varselmärkning',
+            'personligt-skydd' : 'Personligt skydd'
+          }
+        },
+        'lagerinredning' : {
+          'namn' : 'lagerinredning',
+          'meny' : {
+            'pallställ' : 'Pallställ',
+            'lagerhyllor' : 'Lagerhyllor',
+            'backar' : 'Backar',
+            'märkning' : 'Märkning',
+            'stegar-och-ställningar' : 'Stegar och ställningar',
+            'säkerhet-och-skydd' : 'Säkerhet och skydd',
+            'lagerväggar' : 'Lagerväggar',
+            'lyfthjälpmedel' : 'Lyfthjälpmedel',
+            'förvaringsskåp' : 'Förvaringsskåp'
+          }
+        },
+        'industri-och-verkstad' : {
+          'namn' : 'Industri och verkstad',
+          'meny' : {
+            'industriskåp' : 'Industriskåp',
+            'arbetsbord' : 'Arbetsbord',
+            'arbetsstolar' : 'Arbetsstolar',
+            'arbetsplatsmattor' : 'Arbetsplatsmattor',
+            'verktygsförvaring' : 'Verktygsförvaring',
+            'omklädningsrum' : 'Omklädningsrum',
+            'packning-och-emballering' : 'Packning och emballering',
+            'säkerhetsskydd-och-arbetsmiljö' : 'Säkerhetsskydd och arbetsmiljö',
+            'containers' : 'Containers',
+            'fathantering' : 'Fathantering',
+            'hjälpmedel' : 'Hjälpmedel'
+          }
+        },
+        'utomhusmiljö' : {
+          'namn' : 'Utomhusmiljö',
+          'meny' : {
+            'utemöbler' : 'Utemöbler',
+            'askkoppar-och-papperskorgar' : 'Askkoppar och papperskorgar',
+            'cykelförvaring' : 'Cykelförvaring',
+            'halkbekämpning' : 'Halkbekämpning',
+            'renhållning-utomhus' : 'Renhållning - utomhus',
+            'trafik-och-skydd' : 'Trafik och skydd',
+            'arbetsställningar-och-stegar' : 'Arbetsställningar och stegar'
+          }
+        },
+        'entré-och-reception' : {
+          'namn' : 'Entré och reception',
+          'meny' : {
+            'entrémöbler' : 'Entrémöbler',
+            'receptionsdisk' : 'Receptionsdisk',
+            'postsortering' : 'Postsortering',
+            'exponering' : 'Exponering',
+            'entréväxter' : 'Entréväxter',
+            'kapprum' : 'Kapprum',
+            'entrémattor' : 'Entrémattor',
+            'papperskorgar-och-askkoppar' : 'Papperskorgar och askkoppar'
+          }
+        },
+        'kontorsinredning' : {
+          'namn' : 'Kontorsinredning',
+          'meny' : {
+            'kontorsförvaring' : 'Kontorsförvaring',
+            'skrivbord' : 'Skrivbord',
+            'skärmväggar' : 'Skärmväggar',
+            'kontorsstolar' : 'Kontorsstolar',
+            'kontorsbelysning' : 'Kontorsbelysning',
+            'kontorstillbehör' : 'Kontorstillbehör',
+            'kontorsvagnar' : 'Kontorsvagnar',
+            'anslagstavlor' : 'Anslagstavlor',
+            'kontorsväxter' : 'Kontorsväxter',
+            'källsortering-och-papperskorgar' : 'Källsortering och papperskorgar'
+          }
+        },
+        'konferens-och-lunchrum' : {
+          'namn' : 'Konferens och lunchrum',
+          'meny' : {
+            'konferensmöbler' : 'Konferensmöbler',
+            'matsalsmöbler' : 'Matsalsmöbler',
+            'whiteboard' : 'Whiteboard',
+            'källsortering' : 'Källsortering',
+            'matsalsvagnar' : 'Matsalsvagnar'
+          }
+        },
+        'märkning' : {
+          'namn' : 'Märkning',
+          'meny' : {
+            'skyltar' : 'Skyltar',
+            'etiketter' : 'Etiketter',
+            'märkning-produkter' : 'Märkning produkter'
+          }
+        },
+        'butiksinredning' : {
+          'namn' : 'Butiksinredning',
+          'meny' : {
+            'butiksinredning' : 'Butiksinredning',
+            'butiksvagnar' : 'Butiksvagnar',
+            'skyltning' : 'Skyltning',
+            'butikssäkerhet' : 'Butikssäkerhet'
+          }
+        }
+      };
     
       var init = function(){
         collapseEvent();
+        linkEvent();
       };
 
       var nodes2Array = function (nl) {
         var arr = [];
         for(var i=-1,l=nl.length;++i!==l;arr[i]=nl[i]);
         return arr;
-      }
+      };
 
       var collapseToggle = function (collapsingBox) {
         var className = "nav-box--closed";
@@ -215,19 +467,76 @@
       };
 
       var collapseEvent = function() {
-        var collapseTwists = nodes2Array(document.querySelectorAll(".nav-box-twist"));
-        collapseTwists.forEach(function (el,i) {
-          el.addEventListener('click', function(){
-            var collapseBox = el.parentNode.parentNode;
-            collapseToggle(collapseBox);
-          });
+        document.querySelectorAll("nav")[0].addEventListener('click', function(ev){
+          if(ev.target && ev.target.nodeName == "SPAN") {
+            var classes = ev.target.classList;
+            if(classes && classes.contains('js-nav-box-twist')) {
+              var el = ev.target;
+              var collapseBox = el.parentNode.parentNode;
+              collapseToggle(collapseBox);
+            }
+          }
         })
       };
+
+      var linkEvent = function() {
+        document.querySelectorAll("nav")[0].addEventListener('click', function(ev){
+
+          if(ev.target && ev.target.nodeName == "A") {
+            var classes = ev.target.classList;
+            if(classes && classes.contains('js-nav-box-item-link')) {
+              var el = ev.target;
+              var kategoriType = el.getAttribute('data-kategori');
+              var parentItem = el.parentNode;
+              var parentList = parentItem.parentNode;
+              var parentBox = parentList.parentNode;
+              // if submenu already exists
+              if (parentItem.classList.contains('nav-box-item__sub')) {
+                // remove mark from link
+                parentItem.classList.remove('nav-box-item__sub');
+                // expand kategori
+                parentList.classList.remove('nav-box-list__sub');
+                // remove menu
+                var subBox = document.querySelectorAll('.js-nav-box-sub-' + kategoriType)[0];
+                if (subBox) {
+                  subBox.parentNode.removeChild(subBox);
+                }
+              // else create submenu
+              } else {
+                // shrink kategori
+                parentList.classList.add('nav-box-list__sub');
+                // mark link
+                parentItem.classList.add('nav-box-item__sub');
+                // pull data from JSON
+                var kategoriData = menyData[kategoriType];
+                if (!kategoriData) {
+                  return;
+                }
+                var kategoriNamn = kategoriData.namn;
+                var kategoriMeny = kategoriData.meny;
+                // template it
+                var kategoriTemplate = document.getElementById('js-template-nav-subbox').innerHTML;
+                var compiled = _.template(kategoriTemplate,{ 
+                  'kategoriType': kategoriType, 
+                  'kategoriNamn': kategoriNamn, 
+                  'kategoriMeny': kategoriMeny
+                });
+                // insert it
+                parentBox.insertAdjacentHTML('afterend', compiled);
+              }          
+            }
+          }
+        })
+      };
+
+      var linkLoadMenu = function(kategori) {
+        var menuNode = menyData.kategori;
+      }
     
       return {
         init: init
       };
-    }();
+    }(_);
     proto.init();
   </script>
 
