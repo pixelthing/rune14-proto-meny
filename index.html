@@ -47,13 +47,17 @@
       }
       .nav-box-list {
         max-height: 600px;
-        margin: 0;
+        margin: 10px 0;
         padding: 0;
         -webkit-transition: all 500ms;
         overflow: hidden;
       }
       .nav-box--closed .nav-box-list {
         max-height: 0;
+        margin: 0 0;
+      }
+      .nav-box-list__sub {
+        margin: 0 0;
       }
       .nav-box-item {
         position: relative;
@@ -450,7 +454,7 @@
     
       var init = function(){
         collapseEvent();
-        linkEvent();
+        menyEvent();
       };
 
       var nodes2Array = function (nl) {
@@ -479,9 +483,8 @@
         })
       };
 
-      var linkEvent = function() {
+      var menyEvent = function() {
         document.querySelectorAll("nav")[0].addEventListener('click', function(ev){
-
           if(ev.target && ev.target.nodeName == "A") {
             var classes = ev.target.classList;
             if(classes && classes.contains('js-nav-box-item-link')) {
@@ -528,10 +531,6 @@
           }
         })
       };
-
-      var linkLoadMenu = function(kategori) {
-        var menuNode = menyData.kategori;
-      }
     
       return {
         init: init
