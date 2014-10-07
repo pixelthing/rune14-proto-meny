@@ -25,13 +25,7 @@
         background: #eee;
         font-size: 0.8em;
       }
-      .nav-subbox {
-        padding: 10px 0 0;
-        border-width: 3px 0 0;
-        border-style: solid;
-        border-color: #fff;
-      }
-      .nav-category {
+      .nav-title {
         position: relative;
         margin: 0;
         padding: 20px 15px 10px;
@@ -39,12 +33,59 @@
         font-weight: normal;
         text-transform: uppercase;
       }
+      /* title and twist */
       .nav-box-title {
         position: relative;
         margin: 0;
         padding: 0 15px;
         text-transform: uppercase;
       }
+      .nav-box-title__collapsable {
+        cursor: pointer;
+      }
+      .nav-box-title__collapsable:before,
+      .nav-box-title__collapsable:after {
+        content: '-';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        width: 1em;
+        height: 1em;
+        margin-top: -1em;
+        padding: 0.5em;
+        line-height: 1em;
+        border-radius: 100%;
+        text-align: center;
+        -webkit-transition: all 300ms;
+        -moz-transition: all 300ms;
+        transition: all 300ms;
+      }
+      .nav-box-title__collapsable:hover:before,
+      .nav-box-title__collapsable:hover:after {
+        background: #fff;
+      }
+      .nav-box-title__collapsable:after {
+        content: '+';
+        opacity: 0;
+        -webkit-transform: rotate(-180deg);
+        -moz-transform: rotate(-180deg);
+        transform: rotate(-180deg);
+      }
+      .nav-box__collapsed>.nav-box-title__collapsable:before,
+      .nav-box__selected>.nav-box-title__collapsable:before {
+        opacity: 0;
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+      .nav-box__collapsed .nav-box-title__collapsable:after,
+      .nav-box__selected .nav-box-title__collapsable:after {
+        opacity: 1;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      /* list/item/link */
       .nav-box-list {
         max-height: 600px;
         margin: 10px 0;
@@ -52,11 +93,8 @@
         -webkit-transition: all 500ms;
         overflow: hidden;
       }
-      .nav-box--closed .nav-box-list {
+      .nav-box__collapsed .nav-box-list {
         max-height: 0;
-        margin: 0 0;
-      }
-      .nav-box-list__sub {
         margin: 0 0;
       }
       .nav-box-item {
@@ -69,7 +107,7 @@
         -moz-transition: max-height 300ms;
         transition: max-height 300ms;
       }
-      .nav-box-list__sub>.nav-box-item {
+      .nav-box__selected .nav-box-item {
         max-height: 0;
       }
       .nav-box-item-link {
@@ -87,12 +125,12 @@
       .nav-box-item-link:hover {
         background: #fff;
       }
-      .nav-box-list__sub>.nav-box-item__sub {
+      .nav-box__selected .nav-box-item__selected {
         max-height: 3em;
       }
-      .nav-box-item__sub>.nav-box-item-link {
+      .nav-box-item__selected>.nav-box-item-link {
         margin: 10px 0 0;
-        padding: 5px 10px;
+        padding: 5px 15px;
         color: #fff;
         background: #999;
         border-style: solid;
@@ -102,10 +140,10 @@
         -moz-transition: border-width 300ms, margin 300ms;
         transition: border-width 300ms, margin 300ms;
       }
-      .nav-box-twist,
-      .nav-box-item__sub>.nav-box-item-link:after {
+      .nav-box-item__selected>.nav-box-item-link:after {
+        content: '✕';
         position: absolute;
-        right: 10px;
+        right: -5px;
         top: 50%;
         width: 2em;
         height: 2em;
@@ -119,47 +157,6 @@
         -moz-transition: all 300ms;
         transition: all 300ms;
       }
-      .nav-box-twist:before,
-      .nav-box-twist:after {
-        content: '-';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 1em;
-        height: 1em;
-        padding: 0.5em;
-        line-height: 1em;
-        -webkit-transition: all 300ms;
-        -moz-transition: all 300ms;
-        transition: all 300ms;
-
-      }
-      .nav-box-twist:after {
-        content: '+';
-        opacity: 0;
-        -webkit-transform: rotate(-180deg);
-        -moz-transform: rotate(-180deg);
-        transform: rotate(-180deg);
-      }
-      .nav-box-twist:hover {
-        background: #fff;
-      }
-      .nav-box-item__sub>.nav-box-item-link:after {
-        content: '✕';
-        right: -5px;
-      }
-      .nav-box--closed .nav-box-twist:before {
-        opacity: 0;
-        -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-      .nav-box--closed .nav-box-twist:after {
-        opacity: 1;
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        transform: rotate(0deg);
-      }
     </style>
   </head>
   <body>
@@ -167,7 +164,7 @@
     <nav>
 
       <div class="nav-box">
-        <h3 class="nav-box-title">Kategorier<span class="nav-box-twist js-nav-box-twist"></span></h3>
+        <h3 class="nav-box-title nav-box-title__collapsable js-nav-box-title__collapsable">Kategorier</h3>
         <ul class="nav-box-list">
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="lyftutrustning">Lyftutrustning</a></li>
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="transport">Transport</a></li>
@@ -184,10 +181,10 @@
         </ul>
       </div>
 
-      <h2 class="nav-category">Filtrera</h2>
+      <h2 class="nav-title">Filtrera</h2>
       
-      <div class="nav-box nav-box--closed">
-        <h3 class="nav-box-title">Inriktning<span class="nav-box-twist js-nav-box-twist"></span></h3>
+      <div class="nav-box nav-box__collapsed">
+        <h3 class="nav-box-title nav-box-title__collapsable js-nav-box-title__collapsable">Inriktning</h3>
         <ul class="nav-box-list">
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Lager</a></li>
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Kontor</a></li>
@@ -198,8 +195,8 @@
         </ul>
       </div>
       
-      <div class="nav-box nav-box--closed">
-        <h3 class="nav-box-title">Paketering<span class="nav-box-twist js-nav-box-twist"></span></h3>
+      <div class="nav-box nav-box__collapsed">
+        <h3 class="nav-box-title nav-box-title__collapsable js-nav-box-title__collapsable">Paketering</h3>
         <ul class="nav-box-list">
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Premium</a></li>
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Basic</a></li>
@@ -207,8 +204,8 @@
         </ul>
       </div>
       
-      <div class="nav-box nav-box--closed">
-        <h3 class="nav-box-title">Varumärken<span class="nav-box-twist js-nav-box-twist"></span></h3>
+      <div class="nav-box nav-box__collapsed">
+        <h3 class="nav-box-title nav-box-title__collapsable js-nav-box-title__collapsable">Varumärken</h3>
         <ul class="nav-box-list">
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Varumärke 1</a></li>
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Varumärke 2</a></li>
@@ -217,8 +214,8 @@
         </ul>
       </div>
       
-      <div class="nav-box nav-box--closed">
-        <h3 class="nav-box-title">Aktuellt<span class="nav-box-twist js-nav-box-twist"></span></h3>
+      <div class="nav-box nav-box__collapsed">
+        <h3 class="nav-box-title nav-box-title__collapsable js-nav-box-title__collapsable">Aktuellt</h3>
         <ul class="nav-box-list">
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Kampanjer</a></li>
           <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link">Nyheter</a></li>
@@ -229,13 +226,12 @@
 
   <script type="app/template" id='js-template-nav-subbox'>
             <div class="nav-box js-nav-box-sub-<%= kategoriType %>">
-              <h3 class="nav-box-title"><%= kategoriNamn %><span class="nav-box-twist js-nav-box-twist"></span></h3>
+              <h3 class="nav-box-title nav-box-title__collapsable js-nav-box-title__collapsable"><%= kategoriTitle %></span></h3>
               <ul class="nav-box-list">
                 <%
-                  // repeat items 
                   _.each(kategoriMeny,function(item,key,list){
                 %>
-                <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="<%= kategoriType %>-<%= key %>"  ><%= item %></a></li>
+                <li class="nav-box-item"><a href="javascript:void(0)" class="nav-box-item-link js-nav-box-item-link" data-kategori="<%= kategoriType %>-<%= key %>"><%= item %></a></li>
                 <%
                   });
                 %>
@@ -251,14 +247,14 @@
 
       var menyData = {
         'lyftutrustning' : {
-          'namn' : 'Lyftutrustning',
+          'title' : 'Lyftutrustning',
           'meny' : {
             'lyftredskap' : 'Lyftredskap',
             'lyfthjälpmedel' : 'Lyfthjälpmedel'
           }
         },
         'transport' : {
-          'namn' : 'Transport',
+          'title' : 'Transport',
           'meny' : {
             'vagnar-och-kärror' : 'Vagnar och kärror',
             'pallar-och-containers' : 'Pallar och containers',
@@ -268,7 +264,7 @@
           }
         },
         'transport-vagnar-och-kärror' : {
-          'namn' : 'Vagnar och kärror',
+          'title' : 'Vagnar och kärror',
           'meny' : {
             'Rullbord' : 'Rullbord',
             'Hyllvagnar' : 'Hyllvagnar',
@@ -288,7 +284,7 @@
           }
         },
         'transport-pallar-och-containers' : {
-          'namn' : 'Vagnar och kärror',
+          'title' : 'Vagnar och kärror',
           'meny' : {
             'Pallar' : 'Pallar',
             'Pallkragar' : 'Pallkragar',
@@ -308,7 +304,7 @@
           }
         },
         'transport-rullbanor-och-industrihjul' : {
-          'namn' : 'Rullbanor och industrihjul',
+          'title' : 'Rullbanor och industrihjul',
           'meny' : {
             'Rullbanor' : 'Rullbanor',
             'Tillbehör rullbanor' : 'Tillbehör rullbanor',
@@ -318,7 +314,7 @@
           }
         },
         'transport-cyklar' : {
-          'namn' : 'Cyklar',
+          'title' : 'Cyklar',
           'meny' : {
             'Sparkcyklar' : 'Sparkcyklar',
             'Paketcyklar' : 'Paketcyklar',
@@ -327,14 +323,14 @@
           }
         },
         'transport-ramper-och-trösklar' : {
-          'namn' : 'Ramper och trösklar',
+          'title' : 'Ramper och trösklar',
           'meny' : {
             'ramper' : 'Ramper',
             'tröskelbryggor' : 'Tröskelbryggor'
           }
         },
         'miljöhantering' : {
-          'namn' : 'Miljöhantering',
+          'title' : 'Miljöhantering',
           'meny' : {
             'containers' : 'Containers',
             'avfallshantering' : 'Avfallshantering',
@@ -345,7 +341,7 @@
           }
         },
         'säkerhet' : {
-          'namn' : 'Säkerhet',
+          'title' : 'Säkerhet',
           'meny' : {
             'avspärrning' : 'Avspärrning',
             'påkörningsskydd' : 'Påkörningsskydd',
@@ -354,7 +350,7 @@
           }
         },
         'lagerinredning' : {
-          'namn' : 'lagerinredning',
+          'title' : 'lagerinredning',
           'meny' : {
             'pallställ' : 'Pallställ',
             'lagerhyllor' : 'Lagerhyllor',
@@ -368,7 +364,7 @@
           }
         },
         'industri-och-verkstad' : {
-          'namn' : 'Industri och verkstad',
+          'title' : 'Industri och verkstad',
           'meny' : {
             'industriskåp' : 'Industriskåp',
             'arbetsbord' : 'Arbetsbord',
@@ -384,7 +380,7 @@
           }
         },
         'utomhusmiljö' : {
-          'namn' : 'Utomhusmiljö',
+          'title' : 'Utomhusmiljö',
           'meny' : {
             'utemöbler' : 'Utemöbler',
             'askkoppar-och-papperskorgar' : 'Askkoppar och papperskorgar',
@@ -396,7 +392,7 @@
           }
         },
         'entré-och-reception' : {
-          'namn' : 'Entré och reception',
+          'title' : 'Entré och reception',
           'meny' : {
             'entrémöbler' : 'Entrémöbler',
             'receptionsdisk' : 'Receptionsdisk',
@@ -409,7 +405,7 @@
           }
         },
         'kontorsinredning' : {
-          'namn' : 'Kontorsinredning',
+          'title' : 'Kontorsinredning',
           'meny' : {
             'kontorsförvaring' : 'Kontorsförvaring',
             'skrivbord' : 'Skrivbord',
@@ -424,7 +420,7 @@
           }
         },
         'konferens-och-lunchrum' : {
-          'namn' : 'Konferens och lunchrum',
+          'title' : 'Konferens och lunchrum',
           'meny' : {
             'konferensmöbler' : 'Konferensmöbler',
             'matsalsmöbler' : 'Matsalsmöbler',
@@ -434,7 +430,7 @@
           }
         },
         'märkning' : {
-          'namn' : 'Märkning',
+          'title' : 'Märkning',
           'meny' : {
             'skyltar' : 'Skyltar',
             'etiketter' : 'Etiketter',
@@ -442,7 +438,7 @@
           }
         },
         'butiksinredning' : {
-          'namn' : 'Butiksinredning',
+          'title' : 'Butiksinredning',
           'meny' : {
             'butiksinredning' : 'Butiksinredning',
             'butiksvagnar' : 'Butiksvagnar',
@@ -464,27 +460,25 @@
       };
 
       var collapseToggle = function (collapsingBox) {
-        var className = "nav-box--closed";
+        var className = "nav-box__collapsed";
         if (collapsingBox.classList) {
           collapsingBox.classList.toggle(className);
         }
       };
 
       var collapseEvent = function() {
-        document.querySelectorAll("nav")[0].addEventListener('click', function(ev){
-          if(ev.target && ev.target.nodeName == "SPAN") {
+        document.querySelector("nav").addEventListener('click', function(ev){
+          if(ev.target && ev.target.nodeName == "H3") {
             var classes = ev.target.classList;
-            if(classes && classes.contains('js-nav-box-twist')) {
-              var el = ev.target;
-              var collapseBox = el.parentNode.parentNode;
-              collapseToggle(collapseBox);
+            if(classes && classes.contains('js-nav-box-title__collapsable')) {
+              collapseToggle(ev.target.parentNode);
             }
           }
         })
       };
 
       var menyEvent = function() {
-        document.querySelectorAll("nav")[0].addEventListener('click', function(ev){
+        document.querySelector("nav").addEventListener('click', function(ev){
           if(ev.target && ev.target.nodeName == "A") {
             var classes = ev.target.classList;
             if(classes && classes.contains('js-nav-box-item-link')) {
@@ -494,34 +488,34 @@
               var parentList = parentItem.parentNode;
               var parentBox = parentList.parentNode;
               // if submenu already exists
-              if (parentItem.classList.contains('nav-box-item__sub')) {
+              if (parentItem.classList.contains('nav-box-item__selected')) {
                 // remove mark from link
-                parentItem.classList.remove('nav-box-item__sub');
-                // expand kategori
-                parentList.classList.remove('nav-box-list__sub');
+                parentItem.classList.remove('nav-box-item__selected');
+                // remove mark from box
+                parentBox.classList.remove('nav-box__selected');
                 // remove menu
-                var subBox = document.querySelectorAll('.js-nav-box-sub-' + kategoriType)[0];
+                var subBox = document.querySelector('.js-nav-box-sub-' + kategoriType);
                 if (subBox) {
                   subBox.parentNode.removeChild(subBox);
                 }
               // else create submenu
               } else {
-                // shrink kategori
-                parentList.classList.add('nav-box-list__sub');
                 // mark link
-                parentItem.classList.add('nav-box-item__sub');
+                parentItem.classList.add('nav-box-item__selected');
+                // mark box
+                parentBox.classList.add('nav-box__selected');
                 // pull data from JSON
                 var kategoriData = menyData[kategoriType];
                 if (!kategoriData) {
                   return;
                 }
-                var kategoriNamn = kategoriData.namn;
+                var kategoriTitle = kategoriData.title;
                 var kategoriMeny = kategoriData.meny;
                 // template it
                 var kategoriTemplate = document.getElementById('js-template-nav-subbox').innerHTML;
                 var compiled = _.template(kategoriTemplate,{ 
                   'kategoriType': kategoriType, 
-                  'kategoriNamn': kategoriNamn, 
+                  'kategoriTitle': kategoriTitle, 
                   'kategoriMeny': kategoriMeny
                 });
                 // insert it
